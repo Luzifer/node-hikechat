@@ -1,0 +1,12 @@
+{
+  "name": "hike-chatlog",
+  "description": "Script to export text-chatlog from hike chats database",
+  "author": "Knut Ahlers <knut@ahlers.me>",
+  "version": "0.0.1",
+  "dependencies": {
+    "sqlite3": ">= 2.1.1",
+    "coffee-script": ">= 1.2.0",
+    "dateformat": ">= 1.0.6-1.2.3"
+  },
+  "engine": "node 0.6.12"
+}
