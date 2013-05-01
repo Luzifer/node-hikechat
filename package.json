@@ -1,5 +1,5 @@
 {
-  "name": "hike-chatlog",
+  "name": "hikechat,
   "description": "Script to export text-chatlog from hike chats database",
   "author": "Knut Ahlers <knut@ahlers.me>",
   "version": "0.0.1",
