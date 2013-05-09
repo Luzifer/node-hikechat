@@ -11,8 +11,6 @@ getopt = new Getopt([
 getopt.setHelp("Usage: ./#{process.argv[1].match(/(?:.*[\/\\])?(.*)$/)[1]} [OPTIONS] [conversation ID]\n\n[[OPTIONS]]\n")
 opt = getopt.bindHelp().parseSystem()
 
-console.info opt
-
 users = {}
 chats = {}
 
