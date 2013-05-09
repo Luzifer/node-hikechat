@@ -6,7 +6,8 @@ Getopt = require 'node-getopt'
 
 getopt = new Getopt([
   ['h', 'help', 'displays this help'],
-  ['n', 'name=DISPLAYNAME', 'set DISPLAYNAME instead of "me" in output']
+  ['n', 'name=DISPLAYNAME', 'set DISPLAYNAME instead of "me" in output'],
+  ['p', 'partner=DISPLAYNAME', 'set DISPLAYNAME instead of contacts name in output']
 ])
 getopt.setHelp("Usage: ./#{process.argv[1].match(/(?:.*[\/\\])?(.*)$/)[1]} [OPTIONS] [conversation ID]\n\n[[OPTIONS]]\n")
 opt = getopt.bindHelp().parseSystem()
@@ -51,7 +52,7 @@ strwrap = (string, length = 80) ->
   result
 
 export_chat = (convid) ->
-  chatpartner = chats[convid]
+  chatpartner = opt.options.partner ? chats[convid]
   me = opt.options.name ? "me"
 
   chatsdb = new sqlite.Database('databases/chats')
