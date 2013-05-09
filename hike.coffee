@@ -49,7 +49,7 @@ export_chat = (convid) ->
 
   indentlevel = 25 + chatpartner.length
 
-  chatsdb.each "SELECT * FROM messages WHERE convid = #{convid} ORDER BY timestamp DESC", (err, row) ->
+  chatsdb.each "SELECT * FROM messages WHERE convid = #{convid} ORDER BY timestamp DESC, msgid DESC", (err, row) ->
     sender = if row.mappedMsgId == -1 then 'me' else chatpartner
     date = dateFormat new Date(row.timestamp * 1000), 'yyyy-mm-dd HH:MM:ss'
 
