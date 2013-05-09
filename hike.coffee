@@ -7,7 +7,8 @@ Getopt = require 'node-getopt'
 getopt = new Getopt([
   ['h', 'help', 'displays this help'],
   ['n', 'name=DISPLAYNAME', 'set DISPLAYNAME instead of "me" in output'],
-  ['p', 'partner=DISPLAYNAME', 'set DISPLAYNAME instead of contacts name in output']
+  ['p', 'partner=DISPLAYNAME', 'set DISPLAYNAME instead of contacts name in output'],
+  ['', 'no-files', 'strip out files from chat log']
 ])
 getopt.setHelp("Usage: ./#{process.argv[1].match(/(?:.*[\/\\])?(.*)$/)[1]} [OPTIONS] [conversation ID]\n\n[[OPTIONS]]\n")
 opt = getopt.bindHelp().parseSystem()
@@ -68,6 +69,8 @@ export_chat = (convid) ->
     if row.metadata != ''
       metadata = JSON.parse("#{row.metadata}")
       if metadata.files?
+        if opt.options['no-files']?
+          return
         message = "### A file was transferred: http://hike.in/f/#{metadata.files[0].fk}"
 
     lines = strwrap(message.replace(/\n/g, " "), 140)

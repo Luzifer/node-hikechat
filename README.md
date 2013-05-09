@@ -12,12 +12,12 @@
 1. Store the dump using for example `./hike.coffee 4 > /tmp/mychat.txt`
 
 # Parameters
-    $ ./hike.coffee -h
     Usage: ./hike.coffee [OPTIONS] [conversation ID]
     
       -h, --help                 displays this help
       -n, --name=DISPLAYNAME     set DISPLAYNAME instead of "me" in output
       -p, --partner=DISPLAYNAME  set DISPLAYNAME instead of contacts name in output
+          --no-files             strip out files from chat log
 
 # ToDo
 - Find out about groupchats and handle them correctly in export
