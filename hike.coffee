@@ -1,6 +1,7 @@
 #!./node_modules/.bin/coffee
 sqlite = require 'sqlite3'
 dateFormat = require 'dateformat'
+pad = require 'pad'
 
 users = {}
 chats = {}
@@ -46,11 +47,19 @@ export_chat = (convid) ->
   chatsdb = new sqlite.Database('databases/chats')
   chatsdb.serialize()
 
+  indentlevel = 25 + chatpartner.length
+
   chatsdb.each "SELECT * FROM messages WHERE convid = #{convid} ORDER BY timestamp DESC", (err, row) ->
     sender = if row.mappedMsgId == -1 then 'me' else chatpartner
     date = dateFormat new Date(row.timestamp * 1000), 'yyyy-mm-dd HH:MM:ss'
 
-    console.log "[#{date}] (#{sender}) #{row.message}"
+    message = "#{row.message}"
+    lines = strwrap(message.replace(/\n/g, " "), 140)
+
+    linestart = pad("[#{date}] (#{sender})", indentlevel)
+    while lines.length > 0
+      console.log "#{linestart} #{lines.shift()}"
+      linestart = pad(' ', indentlevel)
   , ->
     chatsdb.close()
 
