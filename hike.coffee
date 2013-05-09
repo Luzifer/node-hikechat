@@ -2,6 +2,15 @@
 sqlite = require 'sqlite3'
 dateFormat = require 'dateformat'
 pad = require 'pad'
+Getopt = require 'node-getopt'
+
+getopt = new Getopt([
+  ['h', 'help', 'displays this help']
+])
+getopt.setHelp("Usage: ./#{process.argv[1].match(/(?:.*[\/\\])?(.*)$/)[1]} [OPTIONS] [conversation ID]\n\n[[OPTIONS]]\n")
+opt = getopt.bindHelp().parseSystem()
+
+console.info opt
 
 users = {}
 chats = {}
@@ -21,13 +30,14 @@ usersdb.each 'SELECT * FROM users', (err, row) ->
     chats[row.convid] = users[row.msisdn]
   , ->
     chatsdb.close()
-    if process.argv.length < 3 or chats[process.argv[2]] == undefined
-      console.log "Usage: hike.coffee <conversation ID>\n\nAvailable conversation IDs:"
+    if opt.argv.length < 1 or chats[opt.argv[0]] == undefined
+      getopt.showHelp()
+      console.log "\nAvailable conversation IDs:"
       for convid, name of chats
         console.log "  #{convid}: Chat with #{name}"
       process.exit 1
     else
-      export_chat process.argv[2]
+      export_chat opt.argv[0]
 
 strwrap = (string, length = 80) ->
   result = []
