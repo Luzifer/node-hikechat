@@ -5,7 +5,8 @@ pad = require 'pad'
 Getopt = require 'node-getopt'
 
 getopt = new Getopt([
-  ['h', 'help', 'displays this help']
+  ['h', 'help', 'displays this help'],
+  ['n', 'name=DISPLAYNAME', 'set DISPLAYNAME instead of "me" in output']
 ])
 getopt.setHelp("Usage: ./#{process.argv[1].match(/(?:.*[\/\\])?(.*)$/)[1]} [OPTIONS] [conversation ID]\n\n[[OPTIONS]]\n")
 opt = getopt.bindHelp().parseSystem()
@@ -53,6 +54,7 @@ strwrap = (string, length = 80) ->
 
 export_chat = (convid) ->
   chatpartner = chats[convid]
+  me = opt.options.name ? "me"
 
   chatsdb = new sqlite.Database('databases/chats')
   chatsdb.serialize()
@@ -60,7 +62,7 @@ export_chat = (convid) ->
   indentlevel = 25 + chatpartner.length
 
   chatsdb.each "SELECT * FROM messages WHERE convid = #{convid} ORDER BY timestamp DESC, msgid DESC", (err, row) ->
-    sender = if row.mappedMsgId == -1 then 'me' else chatpartner
+    sender = if row.mappedMsgId == -1 then me else chatpartner
     date = dateFormat new Date(row.timestamp * 1000), 'yyyy-mm-dd HH:MM:ss'
 
     message = "#{row.message}"
