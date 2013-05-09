@@ -15,6 +15,7 @@
     Usage: ./hike.coffee [OPTIONS] [conversation ID]
     
       -h, --help                 displays this help
+      -l, --limit=N              limit output to first N lines
       -n, --name=DISPLAYNAME     set DISPLAYNAME instead of "me" in output
       -p, --partner=DISPLAYNAME  set DISPLAYNAME instead of contacts name in output
           --no-files             strip out files from chat log

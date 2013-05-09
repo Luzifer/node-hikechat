@@ -6,6 +6,7 @@ Getopt = require 'node-getopt'
 
 getopt = new Getopt([
   ['h', 'help', 'displays this help'],
+  ['l', 'limit=N', 'limit output to first N lines'],
   ['n', 'name=DISPLAYNAME', 'set DISPLAYNAME instead of "me" in output'],
   ['p', 'partner=DISPLAYNAME', 'set DISPLAYNAME instead of contacts name in output'],
   ['', 'no-files', 'strip out files from chat log']
@@ -60,8 +61,12 @@ export_chat = (convid) ->
   chatsdb.serialize()
 
   indentlevel = 25 + chatpartner.length
+  lines_sent = 0
 
   chatsdb.each "SELECT * FROM messages WHERE convid = #{convid} ORDER BY timestamp DESC, msgid DESC", (err, row) ->
+    if opt.options.limit? and lines_sent >= parseInt(opt.options.limit)
+      return
+
     sender = if row.mappedMsgId == -1 then me else chatpartner
     date = dateFormat new Date(row.timestamp * 1000), 'yyyy-mm-dd HH:MM:ss'
 
@@ -79,6 +84,8 @@ export_chat = (convid) ->
     while lines.length > 0
       console.log "#{linestart} #{lines.shift()}"
       linestart = pad(' ', indentlevel)
+
+    lines_sent = lines_sent + 1
   , ->
     chatsdb.close()
 
