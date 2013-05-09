@@ -8,7 +8,7 @@ As the `README.md` already states a rooted android device is required for this t
 
 **Required apps:**
 
-1. [BusyBox](https://play.google.com/store/apps/details?id=stericson.busybox) (in my case I used [BusyBox Pro](https://play.google.com/store/apps/details?id=stericson.busybox.donate) as it supports auto updating and other stuff
+1. [BusyBox](https://play.google.com/store/apps/details?id=stericson.busybox) (in my case I used [BusyBox Pro](https://play.google.com/store/apps/details?id=stericson.busybox.donate) as it supports auto updating and other stuff)
 1. [Cron4Phone](https://play.google.com/store/apps/details?id=com.aes.cron4phonefree) to automate execution of the extraction script
 1. [FolderSync](https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.full) to synchronize the backup of the hike database with the webserver using your favorite cloud provider (I'm using Dropbox for this)
 
