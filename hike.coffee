@@ -28,6 +28,18 @@ usersdb.each 'SELECT * FROM users', (err, row) ->
     else
       export_chat process.argv[2]
 
+strwrap = (string, length = 80) ->
+  result = []
+  while string.length > 0
+    if string.length > length
+      splitindex = string.lastIndexOf ' ', length
+      result.push string.substring(0, splitindex)
+      string = string.substring(splitindex + 1)
+    else
+      result.push string
+      string = ''
+  result
+
 export_chat = (convid) ->
   chatpartner = chats[convid]
 
