@@ -65,6 +65,11 @@ export_chat = (convid) ->
     date = dateFormat new Date(row.timestamp * 1000), 'yyyy-mm-dd HH:MM:ss'
 
     message = "#{row.message}"
+    if row.metadata != ''
+      metadata = JSON.parse("#{row.metadata}")
+      if metadata.files?
+        message = "### A file was transferred: http://hike.in/f/#{metadata.files[0].fk}"
+
     lines = strwrap(message.replace(/\n/g, " "), 140)
 
     linestart = pad("[#{date}] (#{sender})", indentlevel)
